@@ -1,0 +1,32 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="ivan_pecherkin" id="create-table-message">
+        <createTable schemaName="socialnet" tableName="message" remarks="Сообщения">
+
+            <column autoIncrement="true" name="id" type="BIGINT" remarks="ID сообщения">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="message_pkey"/>
+            </column>
+
+            <column name="is_deleted" type="BOOLEAN" remarks="Удалено ли сообщение"/>
+
+            <column name="time" type="TIMESTAMP WITH TIME ZONE" remarks="Дата и время отправки"/>
+
+            <column name="author_id" type="BIGINT" remarks="Автор сообщения"/>
+
+            <column name="recipient_id" type="BIGINT" remarks="Получатель сообщения"/>
+
+            <column name="message_text" type="TEXT" remarks="Текст сообщения"/>
+
+            <column name="read_status" type="VARCHAR(4)" remarks="Статус прочтения"/>
+
+            <column name="dialog_id" type="BIGINT" remarks="Диалог сообщения"/>
+
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,45 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Elena Yankovskaya"
+               id="create-table-notification-setting">
+        <createTable schemaName="socialnet"
+                     tableName="notification_setting"
+                     remarks="Настройки оповещений">
+
+            <column name="id"
+                    type="BIGINT"
+                    remarks="id user"/>
+            <column name="enable_like"
+                    type="BOOLEAN"
+                    remarks="Лайк"/>
+            <column name="enable_post"
+                    type="BOOLEAN"
+                    remarks="Новый пост"/>
+            <column name="enable_post_comment"
+                    type="BOOLEAN"
+                    remarks="Комментарий к посту"/>
+            <column name="enable_comment_comment"
+                    type="BOOLEAN"
+                    remarks="Ответ на комментарий"/>
+            <column name="enable_message"
+                    type="BOOLEAN"
+                    remarks="Личное сообщение"/>
+            <column name="enable_friend_request"
+                    type="BOOLEAN"
+                    remarks="Запрос дружбы"/>
+            <column name="enable_friend_birthday"
+                    type="BOOLEAN"
+                    remarks="День рождения друга"/>
+            <column name="enable_send_email_message"
+                    type="BOOLEAN"
+                    remarks="Отправка оповещений на email"/>
+
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

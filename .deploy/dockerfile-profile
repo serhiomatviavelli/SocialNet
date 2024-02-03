@@ -1,0 +1,8 @@
+FROM openjdk:21
+
+ARG JAR_FILE=microservices/profile/target/profile-1.0-SNAPSHOT.jar
+ARG APP_FILE=application-docker.yaml
+COPY ${JAR_FILE} profile.jar
+COPY ${APP_FILE} application.yaml
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/profile.jar"]

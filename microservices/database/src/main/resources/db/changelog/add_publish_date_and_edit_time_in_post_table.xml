@@ -1,0 +1,20 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Sergei Matveev" id="add_publish_date_and_edit_time">
+
+        <addColumn schemaName="socialnet" tableName="post" >
+
+            <column name="publish_date" type="timestamp with time zone" remarks="Дата и время публикации"/>
+
+        </addColumn>
+
+        <setColumnRemarks schemaName="socialnet" tableName="post" columnName="time" remarks="Дата и время создания"/>
+
+    </changeSet>
+
+</databaseChangeLog>

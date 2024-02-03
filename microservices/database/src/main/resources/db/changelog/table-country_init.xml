@@ -1,0 +1,22 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="ivan_pecherkin" id="create-table-country">
+        <createTable schemaName="socialnet" tableName="country" remarks="Страны">
+
+            <column autoIncrement="true" name="id" type="BIGINT" remarks="ID страны">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="country_pkey"/>
+            </column>
+
+            <column name="is_deleted" type="BOOLEAN" remarks="Удалена ли страна"/>
+
+            <column name="title" type="VARCHAR(255)" remarks="Название страны"/>
+
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

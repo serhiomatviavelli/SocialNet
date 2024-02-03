@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="Sergei Matveev" id="create-table-post2tag">
+
+        <createTable schemaName="socialnet" tableName="post2tag" remarks="Таблица связи постов и тегов">
+
+            <column autoIncrement="true" name="id" type="BIGINT" remarks="ID записи">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="post2tag_pkey"/>
+            </column>
+
+            <column name="post_id" type="BIGINT" remarks="Пост">
+                <constraints nullable="false" foreignKeyName="post_id" references="socialnet.post(id)"/>
+            </column>
+
+            <column name="tag_id" type="BIGINT" remarks="Тег">
+                <constraints nullable="false" foreignKeyName="tag_id" references="socialnet.tag(id)"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

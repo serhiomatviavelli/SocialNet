@@ -1,0 +1,21 @@
+database:
+  url: http://database:8050
+
+profile:
+  url: http://profile:8080
+
+communication:
+  url: http://communication:8081
+
+environment:
+  url: http://friendship:8082
+
+frontend:
+  url: http://team43.servehttp.com:8099
+
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/team43
+    username: skillbox43
+    password: skillbox43
+    driver-class-name: org.postgresql.Driver

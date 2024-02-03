@@ -1,0 +1,8 @@
+FROM openjdk:21
+
+ARG JAR_FILE=microservices/database/target/database-1.0-SNAPSHOT.jar
+ARG APP_FILE=application-docker.yaml
+COPY ${JAR_FILE} database.jar
+COPY ${APP_FILE} application.yaml
+EXPOSE 8050
+ENTRYPOINT ["java","-jar","/database.jar"]

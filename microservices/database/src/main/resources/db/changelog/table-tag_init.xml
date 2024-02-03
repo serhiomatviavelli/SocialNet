@@ -1,0 +1,24 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="Sergei Matveev" id="create-table-tag">
+
+        <createTable schemaName="socialnet" tableName="tag" remarks="Теги">
+
+            <column autoIncrement="true" name="id" type="BIGINT" remarks="ID тега">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tag_pkey"/>
+            </column>
+
+            <column name="name" type="text" remarks="Текст тега"/>
+
+            <column name="is_deleted" type="BOOLEAN" remarks="Отметка о том, что тег удален"/>
+
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

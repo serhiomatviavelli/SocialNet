@@ -1,0 +1,27 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="Sergei Matveev" id="add_image_path_remove_public_keys_from_post">
+
+        <addColumn schemaName="socialnet" tableName="post">
+
+            <column name="image_path" type="text" remarks="Адрес изображения"/>
+
+        </addColumn>
+
+        <dropForeignKeyConstraint baseTableName="post" baseTableSchemaName="socialnet"
+                                  constraintName="post_author_id_person_id"/>
+
+        <dropForeignKeyConstraint baseTableName="post2tag" baseTableSchemaName="socialnet"
+                                  constraintName="post_id"/>
+
+        <dropForeignKeyConstraint baseTableName="post2tag" baseTableSchemaName="socialnet"
+                                  constraintName="tag_id"/>
+
+    </changeSet>
+
+</databaseChangeLog>

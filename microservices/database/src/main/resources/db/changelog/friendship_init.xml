@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="create-table-friendship" author="Anton Garussky">
+        <createTable schemaName="socialnet" tableName="friendship" remarks="Таблица связей пользователя с друзьями">
+            <column name="src_person_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="PK_friendship"/>
+            </column>
+            <column name="dst_person_id" type="BIGINT"/>
+            <column name="friendshipStatus" type="VARCHAR(15)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

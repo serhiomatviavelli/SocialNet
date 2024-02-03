@@ -1,0 +1,8 @@
+FROM openjdk:21
+
+ARG JAR_FILE=microservices/friendship/target/friendship-1.0-SNAPSHOT.jar
+ARG APP_FILE=application-docker.yaml
+COPY ${JAR_FILE} friendship.jar
+COPY ${APP_FILE} application.yaml
+EXPOSE 8082
+ENTRYPOINT ["java","-jar","/friendship.jar"]

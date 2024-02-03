@@ -1,0 +1,32 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+        <include file="socialnet-schema-init.xml" relativeToChangelogFile="true"/>
+        <include file="table-person_init.xml" relativeToChangelogFile="true"/>
+        <include file="auth-user_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-country_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-city_init.xml" relativeToChangelogFile="true"/>
+        <include file="add_is_deleted_to_person.xml" relativeToChangelogFile="true"/>
+        <include file="friendship_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-notification-setting_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-post_init.xml" relativeToChangelogFile="true"/>
+        <include file="friendship_drop.xml" relativeToChangelogFile="true"/>
+        <include file="friendship_create.xml" relativeToChangelogFile="true"/>
+        <include file="add_publish_date_and_edit_time_in_post_table.xml" relativeToChangelogFile="true"/>
+        <include file="table-notification_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-tag_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-post2tag_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-dialog_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-message_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-comment_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-likes_init.xml" relativeToChangelogFile="true"/>
+        <include file="alter_table_post_likes.xml" relativeToChangelogFile="true"/>
+        <include file="add_image_path_remove_public_keys_from_post.xml" relativeToChangelogFile="true"/>
+        <include file="edit-table-notification_init.xml" relativeToChangelogFile="true"/>
+        <include file="table-person_alter.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+  gateway:
+    image: skillbox43/social-net-backend:gateway
+    container_name: "gateway"
+    networks:
+      - social-net
+    ports:
+      - "8030:8030"
+
+  communication:
+    image: skillbox43/social-net-backend:communication
+    container_name: "communication"
+    networks:
+      - social-net
+    ports:
+      - "8081:8081"
+
+  database:
+    image: skillbox43/social-net-backend:database
+    container_name: "database"
+    networks:
+      - social-net
+    ports:
+      - "8050:8050"
+
+  friendship:
+    image: skillbox43/social-net-backend:friendship
+    container_name: "friendship"
+    networks:
+      - social-net
+    ports:
+      - "8082:8082"
+
+  profile:
+    image: skillbox43/social-net-backend:profile
+    container_name: "profile"
+    networks:
+      - social-net
+    ports:
+      - "8080:8080"
+
+networks:
+  social-net:
+    driver: bridge

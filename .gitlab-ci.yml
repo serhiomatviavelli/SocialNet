@@ -1,0 +1,94 @@
+stages:
+  - build
+  - test
+  - publish
+  - deploy
+
+build:
+  image: maven:3.9.5
+  services:
+    - postgres:16
+  variables:
+    MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+    POSTGRES_USER: $db_user
+    POSTGRES_PASSWORD: $db_password
+    POSTGRES_DB: $db_name
+    POSTGRES_HOST_AUTH_METHOD: trust
+  cache:
+    paths:
+      - .m2/repository
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS clean install
+    - echo "$CI_JOB_STAGE was successful"
+    - echo "build number $CI_PIPELINE_ID"
+
+.test:
+  stage: test   
+  script:
+    - echo "Not yet implemented. Skip this stage"
+
+publish_project:
+  stage: publish
+  image: docker:24.0.7-alpine3.19
+  services:
+    - postgres:16
+  variables:
+    MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+    POSTGRES_USER: $db_user
+    POSTGRES_PASSWORD: $db_password
+    POSTGRES_DB: $db_name
+    POSTGRES_HOST_AUTH_METHOD: trust
+  cache:
+    paths:
+      - .m2/repository
+  before_script:
+    - apk update
+    - apk add maven
+    - docker logout
+    - docker logout registry-1.docker.io
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
+  script:
+    - mvn $MAVEN_CLI_OPTS clean install
+    - docker build -f .deploy/dockerfile-communication -t skillbox43/social-net-backend:communication .
+    - docker push skillbox43/social-net-backend:communication
+    - docker build -f .deploy/dockerfile-database -t skillbox43/social-net-backend:database .
+    - docker push skillbox43/social-net-backend:database
+    - docker build -f .deploy/dockerfile-friendship -t skillbox43/social-net-backend:friendship .
+    - docker push skillbox43/social-net-backend:friendship
+    - docker build -f .deploy/dockerfile-gateway -t skillbox43/social-net-backend:gateway .
+    - docker push skillbox43/social-net-backend:gateway
+    - docker build -f .deploy/dockerfile-profile -t skillbox43/social-net-backend:profile .
+    - docker push skillbox43/social-net-backend:profile
+    - echo "$CI_JOB_STAGE was successful"
+    - echo "deploy number $CI_PIPELINE_ID"
+  only:
+    - develop
+    - master
+
+deploy_project:
+  stage: deploy
+  image: alpine:3.19.0
+  before_script:
+    - chmod 400 $SERVER_SSH_KEY
+    - apk update
+    - apk add openssh-client
+  script:
+    - scp -r -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no -P $SERVER_PORT microservices/database/src/main/resources/db/changelog/* $SERVER_USER@$SERVER_HOST:/home/socialnet/liquibase/changelog
+    - scp -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no -P $SERVER_PORT .deploy/docker-compose.yaml $SERVER_USER@$SERVER_HOST:/home/socialnet/docker_compose
+    - scp -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no -P $SERVER_PORT .deploy/config/prometheus.yml $SERVER_USER@$SERVER_HOST:/home/socialnet/metrics/prometheus
+    - scp -r -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no -P $SERVER_PORT .deploy/config/grafana $SERVER_USER@$SERVER_HOST:/home/socialnet/metrics
+    - ssh -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST -p $SERVER_PORT "docker run --network=team43-socialnet-backend_social-net --env LIQUIBASE_COMMAND_USERNAME=$db_user --env LIQUIBASE_COMMAND_PASSWORD=$db_password --env LIQUIBASE_COMMAND_URL=jdbc:postgresql://db:5432/team43 --env LIQUIBASE_COMMAND_CHANGELOG_FILE=/changelog/master.xml --rm -v /home/socialnet/liquibase/:/liquibase/changelog liquibase/liquibase:4.25-alpine --log-level=info update"
+    - ssh -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST -p $SERVER_PORT "docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD"
+    - ssh -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST -p $SERVER_PORT "docker-compose -f /home/socialnet/docker_compose/docker-compose.yaml pull"
+    - ssh -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST -p $SERVER_PORT "docker-compose -p=team43-socialnet-backend -f /home/socialnet/docker_compose/docker-compose.yaml up -d"
+    - ssh -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST -p $SERVER_PORT "docker system prune -a -f"
+    - ssh -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST -p $SERVER_PORT "docker stop frontend"
+    - ssh -i $SERVER_SSH_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST -p $SERVER_PORT "docker start frontend"
+    - echo "$CI_JOB_STAGE was successful"
+    - echo "deploy number $CI_PIPELINE_ID"
+  only:
+    - develop
+    - master

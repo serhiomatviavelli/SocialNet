@@ -1,0 +1,63 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/team43
+    username: skillbox43
+    password: skillbox43
+    driver-class-name: org.postgresql.Driver
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 1MB
+
+captcha:
+  length: 3
+  symbols: "abcdefghijklmnopqrstuvwxyz1234567890"
+
+loader-geo:
+  url: https://api.hh.ru
+
+reg:
+  person:
+    isApproved: true
+    isBlocked: false
+    messagePermission: ALL
+
+app:
+  security:
+    passwordStrength: 12
+
+mail:
+  host: smtp.gmail.com
+  port: 587
+  username: socialnetteam43@gmail.com
+  password: qtnysionqgadoyhp
+  protocol: smtp
+  smtpAuth: true
+  smtpStartTlsEnable: true
+  debugEnable: true
+  subject: Social network
+  mailText: Hello!
+
+emailToken:
+  lifeTime: 5
+
+geo-check:
+  activated: true          # Отключить проверку таблиц. Если таблицы пустые запускает полную загрузку.
+  initial-delay-sec: 40   # Время через которое запустится проверки таблиц CITY и COUNTRY
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,profile,prometheus
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true

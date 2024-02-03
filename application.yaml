@@ -1,0 +1,21 @@
+database:
+  url: http://localhost:8050
+
+profile:
+  url: http://localhost:8080
+
+communication:
+  url: http://localhost:8081
+
+environment:
+  url: http://localhost:8082
+
+frontend:
+  url: http://localhost:8099
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/team43
+    username: skillbox43
+    password: skillbox43
+    driver-class-name: org.postgresql.Driver

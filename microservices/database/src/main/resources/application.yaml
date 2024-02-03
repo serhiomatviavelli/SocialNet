@@ -1,0 +1,39 @@
+server:
+  port: 8050
+
+spring:
+
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 1MB
+
+  liquibase:
+    change-log: src/main/resources/db/changelog/master.xml
+    changeLogFile: src/main/resources/db/changelog/master.xml
+    enabled: false
+
+cloudinary:
+  parameters:
+    cloud_name: ddrbvclx4
+    api_key: 885654915398544
+    api_secret: yNc-utCrfPNjDFDXiN2X75ZcSfg
+    secure: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,database,prometheus
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+
+encryption:
+  password: P@ssw0rd!346472321
+  salt: 5f2c9e1a3b7d8f6a
